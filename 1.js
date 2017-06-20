@@ -8,32 +8,25 @@ const Cat = mongoose.model('Cat', {
   name: String, favouriteFood: String, age: Number
 })
 
-//Find all cats
-Cat.find()
-  // good path
-  .then((cats) => {
-    console.log('Found',cats)
+//running the query
+catFindPromise
+  // Good path
+  .then(items => {
+    console.log('Found', cats)
+
+    // creating cat
+    return Cat.create({
+      name: 'Snowball'
+      favouriteFood: 'Spaghetti'
+      age: 24
+    })
+    .then((responseFromCatCreate) =>{
+      return Cat.update({ name: 'Snowball'}, {favouriteFood: 'KFC'})
+    })
   })
-
-
-  // bad path
-  .catch((error) => {
-    console.error()
-  })
-
-
-//Creating a cat
-Cat.create({
-  name: 'Fluffy',
-  favouriteFood: 'Snickers',
-  age: 11
-  }, (error, cats) => {
-    if (error) {
-      console.error(error.mesaage)
-    }
-    else {
-      console.log('Found', cats)
-    }
+  // When something bad happens, will error
+  .catch(error => {
+    console.error('Error in finding or creating cats');
   })
 
 //UPDATE
@@ -46,7 +39,7 @@ Cat.update({name:'Fluffy'}, //Conditions
     }
   })
 
-// // Update a cat
+// // Update a certaing cat
 // Cat.findByIdAndUpdate(5948794576ed3106d1c227fc)
 
 // //Remove all cats named fluffy
