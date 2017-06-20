@@ -9,14 +9,18 @@ const Cat = mongoose.model('Cat', {
 })
 
 //Find all cats
-Cat.find((error, items) => {
-  if (error) {
-    console.error(error.mesaage)
-  }
-  else {
-    console.log('Found', items)
-  }
-})
+Cat.find()
+  // good path
+  .then((cats) => {
+    console.log('Found',cats)
+  })
+
+
+  // bad path
+  .catch((error) => {
+    console.error()
+  })
+
 
 //Creating a cat
 Cat.create({
